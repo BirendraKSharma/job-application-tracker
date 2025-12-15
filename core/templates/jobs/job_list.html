@@ -6,6 +6,24 @@
 <a href="{% url 'job_create' %}">Add New Job</a>
 <a href="{% url 'job_pdf' %}">Download PDF</a>
 
+<form method="get">
+    <input type="text" name="q" placeholder="Search company"
+           value="{{ query|default:'' }}">
+
+    <select name="status">
+        <option value="">All Status</option>
+        <option value="Applied" {% if status == "Applied" %}selected{% endif %}>Applied</option>
+        <option value="Interview" {% if status == "Interview" %}selected{% endif %}>Interview</option>
+        <option value="Offer" {% if status == "Offer" %}selected{% endif %}>Offer</option>
+        <option value="Rejected" {% if status == "Rejected" %}selected{% endif %}>Rejected</option>
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
+
 <table border="1" cellpadding="5">
     <tr>
         <th>Company</th>

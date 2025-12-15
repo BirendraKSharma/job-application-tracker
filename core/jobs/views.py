@@ -9,7 +9,23 @@ from reportlab.pdfgen import canvas
 @login_required
 def job_list(request):
     jobs = JobApplication.objects.filter(user=request.user)
-    return render(request, 'jobs/job_list.html', {'jobs': jobs})
+
+    query = request.GET.get('q')
+    status = request.GET.get('status')
+
+    if query:
+        jobs = jobs.filter(company_name__icontains=query)
+
+    if status:
+        jobs = jobs.filter(status=status)
+
+    context = {
+        'jobs': jobs,
+        'query': query,
+        'status': status,
+    }
+
+    return render(request, 'jobs/job_list.html', context)
 
 
 @login_required
